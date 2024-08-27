@@ -1,17 +1,20 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Redirect, Tabs } from 'expo-router';
+import React, { useContext } from 'react';
 
 import { TabBarIcon } from '@/components';
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useSession } from '../ctx';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { session } = useSession()
+  if (session === "") {
+    return <Redirect href="/login" />
+  }
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors['light'].tint,
         headerShown: false,
       }}>
       <Tabs.Screen
@@ -24,9 +27,27 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="login"
+        name="dashboard"
         options={{
-          title: 'Login',
+          title: 'Dashboard',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'analytics' : 'analytics-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="novoItem"
+        options={{
+          title: 'Novo Item',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'information' : 'information-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="perfil"
+        options={{
+          title: 'Perfil',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'people' : 'people-outline'} color={color} />
           ),

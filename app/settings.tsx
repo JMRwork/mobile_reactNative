@@ -1,5 +1,31 @@
-import { TopBar } from "@/components";
+import { Grid, Radio, TopBar } from "@/components";
+import { useSession } from "./ctx";
+import { useEffect, useState } from "react";
+import RadioGroup from "@/components/radio/radiogroup";
 
 export default function ConfiguracoesScreen() {
-    return <TopBar title="Configurações" back={true} menu={false} />
+    const { changeTheme, theme } = useSession();
+    const [valueChecked, setValueChecked] = useState("1");
+
+    useEffect(() => {
+        changeTheme(valueChecked);
+    }, [valueChecked]);
+
+    return <Grid>
+        <TopBar
+            title="Configurações"
+            back={true}
+            menu={false} />
+        <Grid>
+            <RadioGroup>
+                <Radio
+                    valueChecked={valueChecked}
+                    setValueChecked={setValueChecked}
+                    radios={[
+                        { value: "default", label: "Default" },
+                        { value: "dark", label: "Dark" },
+                    ]} />
+            </RadioGroup>
+        </Grid>
+    </Grid>
 }

@@ -3,14 +3,15 @@ import Grid from "@/components/grid";
 import { Link } from "expo-router";
 import { useSession } from "./ctx";
 import { ScrollView } from "react-native";
+import { useState } from "react";
 
 export default function LoginScreen() {
-    const { signIn } = useSession();
+    const { auth, signIn } = useSession();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     function handleLogin() {
-        alert('Login Sucessfull');
-        signIn();
-
+        signIn(auth, email, password);
     }
     const styles = {
         container: {
@@ -24,8 +25,8 @@ export default function LoginScreen() {
     return (
         <ScrollView>
             <Grid style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%" }}>
-                <TextInput style={{ ...styles.padding }} label="Email" mode='outlined' />
-                <TextInput style={{ ...styles.padding }} label="Password" secureTextEntry mode='outlined' />
+                <TextInput value={email} onChange={(event) => setEmail(event.target.value)} style={{ ...styles.padding }} label="Email" mode='outlined' />
+                <TextInput value={password} onChange={(event) => setPassword(event.target.value)} style={{ ...styles.padding }} label="Password" secureTextEntry mode='outlined' />
                 <Grid style={{
                     ...styles.padding,
                     ...styles.container,

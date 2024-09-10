@@ -4,17 +4,19 @@ import React, { useContext } from 'react';
 import { TabBarIcon } from '@/components';
 import { Colors } from '@/constants/Colors';
 import { useSession } from '../ctx';
+import { useTheme } from 'react-native-paper';
 
 export default function TabLayout() {
+  const theme = useTheme();
   const { session } = useSession()
-  if (session === "") {
+  if (session === null) {
     return <Redirect href="/login" />
   }
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors['light'].tint,
+        tabBarActiveTintColor: theme.colors.primary,
         headerShown: false,
       }}>
       <Tabs.Screen
@@ -36,9 +38,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="novoItem"
+        name="listaItems"
         options={{
-          title: 'Novo Item',
+          title: 'Lista de Items',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'information' : 'information-outline'} color={color} />
           ),

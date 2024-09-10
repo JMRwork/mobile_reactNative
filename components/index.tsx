@@ -13,3 +13,7 @@ export { default as List } from './list';
 export { default as ProgressBar } from './progressbar';
 export { default as Radio } from './radio';
 export { default as SnackBar } from './snackbar'
+export { default as Fab } from './fab'
+export { default as Modal } from './modal'
+export { default as Dialog } from './dialog'
+export { default as Camera } from './camera'

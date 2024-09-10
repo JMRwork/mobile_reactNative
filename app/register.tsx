@@ -2,9 +2,16 @@ import { Grid, Button, TextInput } from "@/components";
 import { useSession } from "./ctx";
 import { Link } from "expo-router";
 import { ScrollView } from "react-native";
+import { useState } from "react";
 
 export default function RegisterScreen() {
-    const { signUp } = useSession();
+    const { auth, signUp } = useSession();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    function handleRegistrar() {
+        signUp(auth, email, password);
+    }
 
     const styles = {
         container: {
@@ -18,14 +25,14 @@ export default function RegisterScreen() {
     return (
         <ScrollView>
             <Grid style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%" }}>
-                <TextInput style={{ ...styles.padding }} label="Email" mode='outlined' />
-                <TextInput style={{ ...styles.padding }} label="Password" secureTextEntry mode='outlined' />
+                <TextInput value={email} onChange={(event) => setEmail(event.target.value)} style={{ ...styles.padding }} label="Email" mode='outlined' />
+                <TextInput value={password} onChange={(event) => setPassword(event.target.value)} style={{ ...styles.padding }} label="Password" secureTextEntry mode='outlined' />
                 <Grid style={{
                     ...styles.padding,
                     ...styles.container,
                     textAlign: 'center'
                 }}>
-                    <Button mode="contained" onPress={() => signUp()}>Registrar</Button>
+                    <Button mode="contained" onPress={handleRegistrar}>Registrar</Button>
                     {/*@ts-ignore*/}
                     <Link href="login">
                         Login
